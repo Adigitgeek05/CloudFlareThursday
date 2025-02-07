@@ -3,7 +3,7 @@ import {react} from 'react'
 
 export default function Sidebar({ selected = "dashboard" }) {
     return (
-      <div className="fixed left-0 top-0 h-screen w-64 bg-[#1a1a1a] text-white p-6 flex flex-col">
+      <>
         <div className="mb-8">
           <h1 className="text-xl font-bold font-roboto">Create</h1>
         </div>
@@ -39,7 +39,8 @@ export default function Sidebar({ selected = "dashboard" }) {
             </li>
           </ul>
         </nav>
-      </div>
+        </>
+      
     );
   }
   
