@@ -47,7 +47,7 @@ export default function Sidebar({ selected = "dashboard" }) {
   function StoryComponent() {
     return (
       <div className="min-h-screen bg-gray-100">
-        <MainComponent selected="dashboard" />
+        <Sidebar selected="dashboard" />
         <div className="ml-64 p-8">
           <h2 className="text-xl font-roboto">Main Content Area</h2>
           <p className="mt-4">
