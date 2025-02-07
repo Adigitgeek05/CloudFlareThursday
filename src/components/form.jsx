@@ -1,10 +1,15 @@
-"use client";
 import React, { useState } from "react";
+import { useStore } from "../utils/store";
+import { GiIronCross } from "react-icons/gi";
+import { IoMdClose } from "react-icons/io";
 
-function MeetingForm({ type = "meet" }) {
+function MeetingForm({ type = "schedule" }) {
+  const { showMeetForm, setShowMeetForm } = useStore();
   const [formData, setFormData] = useState({
     meetingLink: "",
     passcode: "",
+    time: "",
+    date: "",
   });
   const [error, setError] = useState("");
 
@@ -29,7 +34,13 @@ function MeetingForm({ type = "meet" }) {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm p-6">
+    <div className="bg-white relative rounded-lg shadow-sm p-6">
+      <button
+        className="absolute top-2 right-2"
+        onClick={() => setShowMeetForm("")}
+      >
+        <IoMdClose />
+      </button>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <input
@@ -38,13 +49,13 @@ function MeetingForm({ type = "meet" }) {
             value={formData.meetingLink}
             onChange={handleInputChange}
             placeholder={`Enter ${
-              type === "meet" ? "Google Meet" : "Zoom"
+             showMeetForm === "gmeet" ? "Google Meet" : "Zoom"
             } link`}
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all font-roboto"
           />
         </div>
 
-        {type === "zoom" && (
+        {showMeetForm === "zoom" && (
           <div>
             <input
               type="text"
@@ -56,6 +67,33 @@ function MeetingForm({ type = "meet" }) {
             />
           </div>
         )}
+        {type === "schedule" && (
+            <div className="flex space-x-4">
+              <div>
+                <label className="block text-sm font-medium">Date</label>
+                <input
+                  type="date"
+                  value={formData.date}
+                  onChange={handleInputChange}
+                  required
+                  className="p-2 border rounded-md"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium">Time</label>
+                <input
+                  type="time"
+                  value={formData.time}
+                  onChange={handleInputChange}
+                  required
+                  className="p-2 border rounded-md"
+                />
+              </div>
+            </div>
+          )}
+    
+
+
 
         {error && (
           <div className="text-red-500 text-sm font-roboto">{error}</div>
@@ -65,12 +103,11 @@ function MeetingForm({ type = "meet" }) {
           type="submit"
           className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-200 font-roboto"
         >
-          Join Meeting
+          {type==="schedule" ? "Schedule" : "Join Meeting"}
         </button>
       </form>
     </div>
   );
 }
-
 
 export default MeetingForm;
