@@ -11,26 +11,50 @@ function MeetingForm({ type = "schedule" }) {
     time: "",
     date: "",
   });
+
   const [error, setError] = useState("");
 
   const handleInputChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const submitForm = async () => {
+    if (!formData.meetingLink) {
+      setError("Meeting link is required");
+      return;
+    }
+    if (showMeetForm === "zoom" && !formData.passcode) {
+      setError("Passcode is required for Zoom meetings");
+      return;
+    }
+
+    try {
+      console.log("submitting form");
+      const endpoint = type === "schedule" ? "/schedule-meet" : "/join-meet";
+      const response = await fetch(`http://localhost:3000${endpoint}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          meetingId: formData.meetingLink,
+          passcode: formData.passcode,
+          date: formData.date,
+          time: formData.time,
+        }),
+      });
+      if (!response.ok) throw new Error('Failed to process request');
+      setShowMeetForm("");
+    } catch (err) {
+      setError(err.message);
+    }
     setError("");
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!formData.meetingLink) {
-      setError("Meeting link is required");
-      return;
-    }
-    if (type === "zoom" && !formData.passcode) {
-      setError("Passcode is required for Zoom meetings");
-      return;
-    }
+    submitForm();
   };
 
   return (
@@ -92,15 +116,11 @@ function MeetingForm({ type = "schedule" }) {
             </div>
           )}
     
-
-
-
-        {error && (
-          <div className="text-red-500 text-sm font-roboto">{error}</div>
-        )}
+       
 
         <button
           type="submit"
+          
           className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-200 font-roboto"
         >
           {type==="schedule" ? "Schedule" : "Join Meeting"}
