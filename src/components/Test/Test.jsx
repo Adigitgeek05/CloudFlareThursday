@@ -1,4 +1,4 @@
-export default  Test() {
+export default  function Test() {
     const [showMeetForm, setShowMeetForm] = useState(false);
     const [showZoomForm, setShowZoomForm] = useState(false);
     const [recentMeetings] = useState([
