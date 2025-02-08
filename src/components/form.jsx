@@ -7,7 +7,7 @@ const MEETING_TYPES = {
   ZOOM: "zoom"
 };
 
-const API_BASE_URL = "https://1065-2409-40c2-103f-63f5-59a1-ca4d-de21-3adb.ngrok-free.app";
+export const API_BASE_URL = "https://1065-2409-40c2-103f-63f5-59a1-ca4d-de21-3adb.ngrok-free.app";
 
 const INITIAL_FORM_STATE = {
   meetingLink: "",
