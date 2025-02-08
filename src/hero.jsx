@@ -112,6 +112,28 @@ export default function Hero() {
           <h2 className="text-xl font-roboto text-gray-800 mb-4">
             Recent Meetings
           </h2>
+          {recentMeetings.length === 0 && (
+            <p className="text-gray-500">No recent meetings</p>
+          )}
+          {recentMeetings.map((meeting) => (
+            <div
+              key={meeting}
+              className="flex items-center justify-between bg-gray-100 p-4 rounded-lg mb-4"
+            >
+              <div>
+                <h3 className="text-lg font-roboto text-gray-800">
+                  
+                </h3>
+                <p className="text-sm text-gray-500">{meeting.jobName}</p>
+              </div>
+              <div> 
+                {meeting.nextInvocation}
+                </div>
+              <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">
+                Join
+              </button>
+            </div>
+          ))}
           
         </div>
       </main>
