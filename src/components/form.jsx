@@ -12,6 +12,19 @@ function MeetingForm({ type = "schedule" }) {
     date: "",
   });
 
+
+  function convertISTToUTC(date, time) {
+    if (!date || !time) {
+      throw new Error("Both date and time are required");
+    }
+  
+    // Create a Date object in IST (UTC+5:30)
+    const istDateTime = new Date(`${date}T${time}:00+05:30`);
+  
+    // Convert to UTC ISO string
+    return istDateTime.toISOString();
+  }
+
   const [error, setError] = useState("");
 
   const handleInputChange = (e) => {
@@ -32,7 +45,8 @@ function MeetingForm({ type = "schedule" }) {
     try {
       console.log("submitting form");
       const endpoint = type === "schedule" ? "/schedule-meet" : "/join-meet";
-      const response = await fetch(`http://localhost:3000${endpoint}`, {
+      const string = convertISTToUTC(formData.date, formData.time)
+      const response = await fetch(`https://1065-2409-40c2-103f-63f5-59a1-ca4d-de21-3adb.ngrok-free.app${endpoint}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -40,8 +54,10 @@ function MeetingForm({ type = "schedule" }) {
         body: JSON.stringify({
           meetingId: formData.meetingLink,
           passcode: formData.passcode,
+          type: showMeetForm,
           date: formData.date,
           time: formData.time,
+          scheduleTime : string
         }),
       });
       if (!response.ok) throw new Error('Failed to process request');
@@ -96,6 +112,7 @@ function MeetingForm({ type = "schedule" }) {
               <div>
                 <label className="block text-sm font-medium">Date</label>
                 <input
+                name="date"
                   type="date"
                   value={formData.date}
                   onChange={handleInputChange}
@@ -106,6 +123,7 @@ function MeetingForm({ type = "schedule" }) {
               <div>
                 <label className="block text-sm font-medium">Time</label>
                 <input
+                name="time"
                   type="time"
                   value={formData.time}
                   onChange={handleInputChange}

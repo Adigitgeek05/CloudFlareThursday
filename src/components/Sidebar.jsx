@@ -5,7 +5,7 @@ export default function Sidebar({ selected = "dashboard" }) {
     return (
       <>
         <div className="mb-8">
-          <h1 className="text-xl font-bold font-roboto">Create</h1>
+          <h1 className="text-xl font-bold font-roboto">CloudRain</h1>
         </div>
   
         <nav className="flex-1">
