@@ -1,8 +1,9 @@
-# React + Vite
+This is the frontend part of team THURSDAY'S Project for sponsored problem statement by CLOUDFLARE in INNERVE'9.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+In our UI we have two platform access through which our bot can join we can join in the meet manually by passing the meeting id and passcode of the meet 
+And we have the automated the process of joining the meet just by one click extension. Our model offers just one click automated joining of the bot without giving the meeting id and passcode.
+
+We have added a column for scheduling the meet it will get displayed at the interface after scheduling the meet.
+
